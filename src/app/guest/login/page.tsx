@@ -1,13 +1,13 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { auth } from '@/lib/auth'
 
-export default function GuestLoginPage() {
+function GuestLoginForm() {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [confirmPassword, setConfirmPassword] = useState('')
@@ -204,5 +204,13 @@ export default function GuestLoginPage() {
 				</div>
 			</div>
 		</div>
+	)
+}
+
+export default function GuestLoginPage() {
+	return (
+		<Suspense fallback={<div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">Loading...</div>}>
+			<GuestLoginForm />
+		</Suspense>
 	)
 } 

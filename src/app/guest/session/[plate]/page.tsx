@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { notFound } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { Navbar } from '@/components/layout/navbar'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -10,20 +10,15 @@ import { Badge } from '@/components/ui/badge'
 import { STATUS_COLORS } from '@/lib/constants'
 import { findSessionByLicensePlate, findUserById } from '@/lib/mock-data'
 
-type PageProps = {
-	params: {
-		plate: string
-	}
-}
-
 // Mock validation function
 const VALIDATION_CODES = ['SUNSET10', 'MALL2025']
 function isValidCode(code: string): boolean { 
 	return VALIDATION_CODES.includes(code.toUpperCase()) 
 }
 
-export default function GuestSessionPage({ params }: PageProps) {
-	const licensePlate = decodeURIComponent(params.plate).toUpperCase()
+export default function GuestSessionPage() {
+	const params = useParams()
+	const licensePlate = decodeURIComponent(params.plate as string).toUpperCase()
 	console.log('License plate:', licensePlate)
 
 	const session = findSessionByLicensePlate(licensePlate)
